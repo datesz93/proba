@@ -19,10 +19,16 @@ class Valuta extends MX_Controller {
 		$array = json_decode($xmlJson,TRUE);
 
 		foreach ($array['Cube']['Cube']['Cube'] as $key => $value) {
+			$data = array('currency' => $value["@attributes"]["currency"], 'rate' => $value["@attributes"]["rate"]);
 			if($letezik->num == 0)
-				$this->countuiesModel->setCurrency($value["@attributes"]["currency"],$value["@attributes"]["rate"]);
+				$hibaVane = $this->countuiesModel->setCurrency($data);
 			else 
-				$this->countuiesModel->setCurrency($value["@attributes"]["currency"],$value["@attributes"]["rate"]);
+				$hibaVane = $this->countuiesModel->setCurrency($data);
+			
+			if($hibaVane == false) {
+				echo '<script>alert("Gond van az url-en érkező adatokkal, módosúltak kérem lépjek kapcsolatba a kód készítőjével a hiba orvoslására.")</script>';
+				break;
+			}
 		}
 	}
 }

@@ -7,12 +7,14 @@ Class CountuiesModel extends CI_Model {
 		parent::__construct();
 	}
 
-	public function setCurrency($currency,$rate) {
-		$sql = "INSERT INTO EuropeBank (currency, rate)
-					VALUES (?, ?);";
+	public function setCurrency($data) {
 
-		$data = array($currency,$rate);
-	    $this->db->query($sql, $data);
+	    $this->db->insert('EuropeBank', $data);
+	    $last_id = $this->db->insert_id();
+
+	    if(isset($last_id) && $last_id != '')
+	    	return true;
+	    else return false;
 	}
 
 	public function getCurrency() {

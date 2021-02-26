@@ -9,7 +9,7 @@ class Json extends MX_Controller {
 	
 	public function index()
 	{
-		modules::run('valuta/valuta/index');
+		echo modules::run('valuta/valuta/index');
 		$this->countuies_Model->deleteAll();
 		$url = "https://restcountries.eu/rest/v2/all?fields=name;alpha2Code;alpha3Code;capital;subregion;population;currencies";
 
@@ -41,7 +41,21 @@ class Json extends MX_Controller {
 				if($code != "" && $name != "" && $symbol != "") $cur .= $code.", ".$name.", ".$symbol;
 				if(count($value->currencies) > 1) $cur .= ";";
 			}
-			$this->countuies_Model->setCountries($json[$key]->name, $json[$key]->alpha2Code, $json[$key]->alpha3Code, $json[$key]->capital, $json[$key]->subregion, $json[$key]->population, $euro, $cur);
+			$data = array('name' => $json[$key]->name,
+						'alpha2Code' => $json[$key]->alpha2Code, 
+						'alpha3Code' => $json[$key]->alpha3Code, 
+						'capital' => $json[$key]->capital, 
+						'subregion' => $json[$key]->subregion, 
+						'population' => $json[$key]->population, 
+						'euro' => $euro, 
+						'currencies' => $cur
+			);
+			$hibaVane = $this->countuies_Model->setCountries($data);
+
+			if($hibaVane == false) {
+				echo '<script>alert("Gond van az url-en érkező adatokkal, módosúltak kérem lépjek kapcsolatba a kód készítőjével a hiba orvoslására.")</script>';
+				break;
+			}
 		}
 		
 		$this->load->view('header');

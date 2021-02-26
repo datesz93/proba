@@ -7,13 +7,14 @@ Class Countuies_Model extends CI_Model {
 		parent::__construct();
 	}
 
-	public function setCountries($name, $alpha2Code, $alpha3Code, $capital, $subregion, $population, $euro, $currencies) {
+	public function setCountries($data) {
 
-		$sql = "INSERT INTO Countries (name, alpha2Code, alpha3Code, capital, subregion, population, euro, currencies)
-					VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+	    $this->db->insert('Countries', $data);
+	    $last_id = $this->db->insert_id();
 
-	    $data = array($name, $alpha2Code, $alpha3Code, $capital, $subregion, $population, $euro, $currencies);
-	    $this->db->query($sql, $data);
+	    if(isset($last_id) && $last_id != '')
+	    	return true;
+	    else return false;
 	}
 
 	public function deleteAll()

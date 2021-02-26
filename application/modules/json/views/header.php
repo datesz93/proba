@@ -18,14 +18,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
    <link rel="stylesheet" href="<?php echo base_url("/assets/css/SajatResponsestyle.css"); ?>">
    <link href="<?php echo base_url("/assets/node_modules/font-awesome/css/font-awesome.min.css"); ?>">
    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
-   <link rel="stylesheet" type="text/css" href="//github.com/downloads/lafeber/world-flags-sprite/flags32.css"/>
+   <link rel="stylesheet" type="text/css" href="https://github.com/downloads/lafeber/world-flags-sprite/flags32.css"/>
    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
    <meta name="robots" content="noindex, noimageindex, nofollow, nosnippet">
    <meta name="googlebot" content="noindex, noimageindex, nofollow, nosnippet">
     <script type="text/javascript">
     $(document).ready(function(){
       $('#myTable').DataTable({
-        "ajax": '<?php echo site_url(); ?>/json/ajax/myData',
+        "ajax": '<?php echo site_url(); ?>json/ajax/myData',
         "order": [[ 0, "asc" ]],
         "lengthMenu": [[10], [10]],
         "columnDefs": [
@@ -82,7 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         var valutaName = "";
         var valutaName = $(this).data("value");
         $("#valutaRate").html(valutaName);
-        $.ajax({url: "<?php echo site_url(); ?>/json/ajax/euro/"+valutaName, success: function(result){
+        $.ajax({url: "<?php echo site_url(); ?>json/ajax/euro/"+valutaName, success: function(result){
 //          $("#valutaValtas").data("arfolyam", result);
           $('#valutaValtas').attr('data-arfolyam', result);
           $('#valutaValtas').val(result);
